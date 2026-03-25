@@ -17,10 +17,12 @@
   --border:rgba(255,255,255,0.08);--border-accent:rgba(240,192,48,0.2);
   --text:#e8dcc8;--text-dim:#9a8a74;--text-bright:#fff;
   --accent:#f0c030;--accent-glow:rgba(240,192,48,0.25);
-  --green:#4caf50;--green-dim:rgba(76,175,80,0.15);
-  --red:#ef5350;--red-dim:rgba(239,83,80,0.15);
+  --green:#66bb6a;--green-dim:rgba(102,187,106,0.15);--green-bright:#81c784;
   --blue:#42a5f5;--blue-dim:rgba(66,165,245,0.15);
+  --red:#ef5350;--red-dim:rgba(239,83,80,0.15);
   --orange:#ffa726;--orange-dim:rgba(255,167,38,0.15);
+  --yellow:#ffee58;--yellow-dim:rgba(255,238,88,0.15);
+  --teal:#26a69a;--teal-dim:rgba(38,166,154,0.15);
   --radius:12px;
   --font-display:'Playfair Display',Georgia,serif;
   --font-body:'DM Sans',-apple-system,sans-serif;
@@ -28,17 +30,13 @@
 }
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font-body)}
 body{display:flex;justify-content:center;align-items:flex-start}
-
 #app{display:flex;flex-direction:column;align-items:center;width:100%;max-width:480px;height:100vh;height:100dvh;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;overflow:hidden}
 
 /* ── Tabs ── */
 .tab-bar{display:flex;width:100%;border-bottom:1px solid var(--border);flex-shrink:0}
 .tab{flex:1;padding:12px 0;text-align:center;font-size:0.8rem;font-weight:600;color:var(--text-dim);cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent;letter-spacing:0.03em}
-.tab:hover{color:var(--text)}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--text)}.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 .tab-icon{font-size:1rem;margin-right:4px;vertical-align:-1px}
-
-/* ── Panels ── */
 .panel{display:none;flex-direction:column;align-items:center;width:100%;flex:1;overflow:hidden}
 .panel.active{display:flex}
 
@@ -53,28 +51,13 @@ h1 .tm{font-size:0.45em;vertical-align:super;opacity:0.5}
 .stat-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim)}
 .stat-value{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--accent);line-height:1.2}
 .stat-divider{width:1px;height:24px;background:var(--border);margin:0 4px}
-
-/* Engine bar */
-.engine-bar{width:100%;max-width:440px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;min-height:44px}
-.engine-icon{font-size:1rem;flex-shrink:0}
-.engine-info{flex:1;min-width:0}
-.engine-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);display:flex;align-items:center;gap:4px}
-.engine-label .dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse-dot 2s infinite}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
-.engine-eval{font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--text);margin-top:1px}
-.engine-eval .pct{font-size:1rem}
-.engine-prob-bar{width:80px;height:8px;background:var(--red-dim);border-radius:4px;overflow:hidden;flex-shrink:0}
-.engine-prob-fill{height:100%;background:var(--green);border-radius:4px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
-
 .game-container{position:relative;touch-action:none;line-height:0}
 canvas{display:block;border-radius:var(--radius)}
-
 .controls{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;justify-content:center}
 .btn{font-family:var(--font-body);font-weight:600;font-size:0.75rem;border:none;border-radius:8px;cursor:pointer;transition:all 0.15s ease;display:flex;align-items:center;gap:5px;white-space:nowrap}
 .btn:active{transform:scale(0.97)}
 .btn-control{background:var(--bg-card);color:var(--text);border:1px solid var(--border);padding:8px 14px}
-.btn-control:hover{background:var(--bg-elevated)}
-.btn-control:disabled{opacity:0.35;pointer-events:none}
+.btn-control:hover{background:var(--bg-elevated)}.btn-control:disabled{opacity:0.35;pointer-events:none}
 .btn-primary{background:var(--accent);color:#1a1410;padding:10px 24px;font-size:0.85rem;font-weight:700}
 .btn-primary:hover{filter:brightness(1.1)}
 .btn-ghost{background:transparent;color:var(--text-dim);padding:8px 16px;border:1px solid var(--border)}
@@ -82,6 +65,8 @@ canvas{display:block;border-radius:var(--radius)}
 .btn-sm{padding:6px 12px;font-size:0.7rem}
 .btn-danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,83,80,0.2)}
 .btn-danger:hover{background:rgba(239,83,80,0.25)}
+.btn-review{background:linear-gradient(135deg,#2a3a2a,#1e2e1e);color:var(--green-bright);border:1px solid rgba(102,187,106,0.3);padding:10px 20px;font-size:0.82rem;font-weight:700;gap:6px}
+.btn-review:hover{background:linear-gradient(135deg,#334433,#283828)}
 
 /* ── Overlay ── */
 .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:var(--radius);opacity:0;pointer-events:none;transition:opacity 0.35s ease;z-index:10}
@@ -91,12 +76,12 @@ canvas{display:block;border-radius:var(--radius)}
 .overlay-icon{font-size:2.2rem;margin-bottom:6px}
 .overlay-card h2{font-family:var(--font-display);font-weight:900;font-size:1.4rem;color:var(--accent);margin-bottom:4px}
 .overlay-card p{color:var(--text-dim);font-size:0.8rem;margin-bottom:16px;max-width:260px}
-.overlay-actions{display:flex;flex-direction:column;gap:6px;align-items:center}
+.overlay-actions{display:flex;flex-direction:column;gap:8px;align-items:center}
 
 /* ── Modals ── */
-.modal-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:20;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:20;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .modal-overlay.visible{opacity:1;pointer-events:auto}
-.modal-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 20px;max-width:380px;width:90%;text-align:center;max-height:85vh;overflow-y:auto}
+.modal-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 20px;max-width:400px;width:92%;text-align:center;max-height:88vh;overflow-y:auto}
 .modal-card h2{font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:var(--accent);margin-bottom:12px}
 .rules-content{text-align:left;margin-bottom:16px}
 .rule{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
@@ -105,8 +90,7 @@ canvas{display:block;border-radius:var(--radius)}
 .rule p strong{color:var(--text)}
 .rating-guide{background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;margin-top:8px}
 .rating-row{display:flex;gap:8px;align-items:center;font-size:0.75rem;color:var(--text-dim);padding:2px 0}
-.rating-stars{color:var(--accent);font-size:0.9rem}
-.rating-stars.dim{opacity:0.3}
+.rating-stars{color:var(--accent);font-size:0.9rem}.rating-stars.dim{opacity:0.3}
 
 /* Picker */
 .picker-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:20;opacity:0;pointer-events:none;transition:opacity 0.3s}
@@ -115,6 +99,40 @@ canvas{display:block;border-radius:var(--radius)}
 .picker-card h2{font-family:var(--font-display);font-weight:900;font-size:1.1rem;color:var(--accent);margin-bottom:4px}
 .picker-card p{color:var(--text-dim);font-size:0.75rem;margin-bottom:12px}
 .picker-card canvas{margin:0 auto 10px;cursor:pointer}
+
+/* ═══ REVIEW MODAL ═══ */
+.review-header{margin-bottom:16px}
+.review-header h2{margin-bottom:8px}
+.review-accuracy{font-family:var(--font-display);font-weight:900;font-size:2.2rem;line-height:1}
+.review-accuracy-label{font-size:0.7rem;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+.review-summary{display:flex;justify-content:center;gap:4px;margin:14px 0 8px;flex-wrap:wrap}
+.review-badge{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;font-size:0.72rem;font-weight:700}
+.review-badge .rb-count{font-family:var(--font-mono);font-size:0.85rem}
+.rb-best{background:var(--teal-dim);color:var(--teal)}
+.rb-great{background:var(--green-dim);color:var(--green)}
+.rb-good{background:var(--blue-dim);color:var(--blue)}
+.rb-inaccuracy{background:var(--yellow-dim);color:#e6d54a}
+.rb-mistake{background:var(--orange-dim);color:var(--orange)}
+.rb-blunder{background:var(--red-dim);color:var(--red)}
+
+.review-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:8px 0 16px;gap:1px}
+.review-bar-seg{height:100%;min-width:2px;transition:width 0.5s}
+
+.review-moves{text-align:left}
+.review-move{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:4px;background:var(--bg);border:1px solid transparent;transition:background 0.15s}
+.review-move:hover{background:var(--bg-elevated)}
+.rm-num{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);width:20px;text-align:right;flex-shrink:0}
+.rm-move{font-family:var(--font-mono);font-size:0.8rem;font-weight:600;color:var(--text);flex:1;display:flex;align-items:center;gap:3px}
+.rm-arrow{color:var(--accent);font-size:0.75rem}
+.rm-classification{font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0}
+.rm-cls-best{background:var(--teal-dim);color:var(--teal)}
+.rm-cls-great{background:var(--green-dim);color:var(--green)}
+.rm-cls-good{background:var(--blue-dim);color:var(--blue)}
+.rm-cls-inaccuracy{background:var(--yellow-dim);color:#e6d54a}
+.rm-cls-mistake{background:var(--orange-dim);color:var(--orange)}
+.rm-cls-blunder{background:var(--red-dim);color:var(--red)}
+.rm-detail{font-size:0.6rem;color:var(--text-dim);font-family:var(--font-mono);flex-shrink:0}
+.rm-best-was{font-size:0.6rem;color:var(--text-dim);margin-left:28px;margin-top:-2px;margin-bottom:4px;font-style:italic}
 
 /* ── HISTORY PANEL ── */
 .history-panel{padding:0}
@@ -132,36 +150,23 @@ canvas{display:block;border-radius:var(--radius)}
 .game-entry:hover{background:var(--bg-elevated)}
 .ge-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .ge-result{font-weight:700;font-size:0.85rem}
-.ge-result.genius{color:var(--accent)}
-.ge-result.smart{color:var(--green)}
-.ge-result.dumb{color:var(--orange)}
-.ge-result.bad{color:var(--red)}
+.ge-result.genius{color:var(--accent)}.ge-result.smart{color:var(--green)}.ge-result.dumb{color:var(--orange)}.ge-result.bad{color:var(--red)}
 .ge-date{font-size:0.65rem;color:var(--text-dim)}
-.ge-details{display:flex;gap:12px;font-size:0.7rem;color:var(--text-dim);margin-bottom:8px}
+.ge-details{display:flex;gap:12px;font-size:0.7rem;color:var(--text-dim);margin-bottom:6px}
 .ge-details span{display:flex;align-items:center;gap:3px}
-.ge-moves{display:flex;flex-wrap:wrap;gap:3px}
-.ge-move{font-family:var(--font-mono);font-size:0.6rem;background:var(--bg-elevated);border-radius:4px;padding:2px 5px;color:var(--text-dim);display:flex;align-items:center;gap:2px}
-.ge-move .arrow{color:var(--accent);font-size:0.7rem}
-.ge-eval-badge{display:inline-flex;align-items:center;gap:3px;font-family:var(--font-mono);font-size:0.6rem;padding:2px 6px;border-radius:4px;font-weight:600}
-.ge-eval-badge.good{background:var(--green-dim);color:var(--green)}
-.ge-eval-badge.ok{background:var(--blue-dim);color:var(--blue)}
-.ge-eval-badge.bad{background:var(--orange-dim);color:var(--orange)}
-.ge-eval-badge.terrible{background:var(--red-dim);color:var(--red)}
+.ge-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;gap:1px;margin-bottom:8px}
+.ge-bar-seg{height:100%;min-width:2px}
+.ge-review-btn{font-size:0.7rem;color:var(--green);cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:3px;padding:4px 0}
+.ge-review-btn:hover{text-decoration:underline}
 .history-actions{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0;display:flex;justify-content:center}
 
 @media(max-height:700px){
-  .game-panel{padding:4px 12px}
-  .header{margin-bottom:2px}
-  .stats-bar{margin-bottom:4px;padding:4px 12px}
-  .engine-bar{padding:6px 10px;margin-bottom:4px}
-  .controls{margin-top:4px}
-  h1{font-size:1.2rem}
+  .game-panel{padding:4px 12px}.header{margin-bottom:2px}.stats-bar{margin-bottom:4px;padding:4px 12px}.controls{margin-top:4px}h1{font-size:1.2rem}
 }
 </style>
 </head>
 <body>
 <div id="app">
-  <!-- Tab Bar -->
   <div class="tab-bar">
     <div class="tab active" data-tab="game"><span class="tab-icon">🎮</span>Game</div>
     <div class="tab" data-tab="history"><span class="tab-icon">📊</span>History</div>
@@ -180,17 +185,6 @@ canvas{display:block;border-radius:var(--radius)}
       <div class="stat-divider"></div>
       <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="bestScore">—</span></div>
     </div>
-
-    <!-- Engine Analysis Bar -->
-    <div class="engine-bar" id="engineBar">
-      <div class="engine-icon">⚙️</div>
-      <div class="engine-info">
-        <div class="engine-label"><span class="dot"></span> CB Engine v1</div>
-        <div class="engine-eval" id="engineEval">Analyzing...</div>
-      </div>
-      <div class="engine-prob-bar"><div class="engine-prob-fill" id="engineProbFill" style="width:50%"></div></div>
-    </div>
-
     <div class="game-container" id="gameContainer">
       <canvas id="board"></canvas>
       <div class="overlay" id="overlay">
@@ -199,55 +193,42 @@ canvas{display:block;border-radius:var(--radius)}
           <h2 id="overlayTitle"></h2>
           <p id="overlaySub"></p>
           <div class="overlay-actions">
+            <button class="btn btn-review" id="overlayReview">⚙️ Game Review</button>
             <button class="btn btn-primary" id="overlayNewGame">New Game</button>
             <button class="btn btn-ghost" id="overlayUndo">Undo Last</button>
           </div>
         </div>
       </div>
     </div>
-
     <div class="controls">
       <button class="btn btn-control" id="undoBtn" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-        Undo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>Undo
       </button>
       <button class="btn btn-control" id="newGameBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-        New Game
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>New Game
       </button>
       <button class="btn btn-control" id="rulesBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Rules
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Rules
       </button>
     </div>
   </div>
 
   <!-- HISTORY PANEL -->
   <div class="panel history-panel" data-panel="history">
-    <div class="history-header">
-      <h2>Game History</h2>
-      <p>Your past games and engine analysis</p>
-    </div>
-    <div class="history-stats" id="historyStats">
+    <div class="history-header"><h2>Game History</h2><p>Your past games and engine analysis</p></div>
+    <div class="history-stats">
       <div class="history-stat"><div class="hs-val" id="hsTotalGames">0</div><div class="hs-label">Games</div></div>
       <div class="history-stat"><div class="hs-val" id="hsAvgPegs">—</div><div class="hs-label">Avg Pegs</div></div>
       <div class="history-stat"><div class="hs-val" id="hsBestEver">—</div><div class="hs-label">Best</div></div>
       <div class="history-stat"><div class="hs-val" id="hsGenius">0</div><div class="hs-label">Genius</div></div>
     </div>
     <div class="history-list" id="historyList"></div>
-    <div class="history-actions">
-      <button class="btn btn-danger btn-sm" id="clearHistoryBtn">Clear History</button>
-    </div>
+    <div class="history-actions"><button class="btn btn-danger btn-sm" id="clearHistoryBtn">Clear History</button></div>
   </div>
 
   <!-- Picker -->
   <div class="picker-overlay" id="pickerOverlay">
-    <div class="picker-card">
-      <h2>Choose the empty hole</h2>
-      <p>Tap a peg position to start with that hole empty.</p>
-      <canvas id="pickerCanvas"></canvas>
-      <button class="btn btn-ghost btn-sm" id="pickerRandom">Random</button>
-    </div>
+    <div class="picker-card"><h2>Choose the empty hole</h2><p>Tap a peg position to start with that hole empty.</p><canvas id="pickerCanvas"></canvas><button class="btn btn-ghost btn-sm" id="pickerRandom">Random</button></div>
   </div>
 
   <!-- Rules Modal -->
@@ -269,123 +250,135 @@ canvas{display:block;border-radius:var(--radius)}
       <button class="btn btn-primary" id="closeRules">Got it</button>
     </div>
   </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal-card" id="reviewContent"></div>
+  </div>
 </div>
 
 <script>
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // GAME LOGIC
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 const ROWS=5,TOTAL=15;
 const DIRS=[[-1,-1,-2,-2],[-1,0,-2,0],[0,-1,0,-2],[0,1,0,2],[1,0,2,0],[1,1,2,2]];
-// Position labels for history display (row-col notation)
 const POS_LABELS=[];
-{let i=0;for(let r=0;r<ROWS;r++)for(let c=0;c<=r;c++){POS_LABELS.push(String.fromCharCode(65+r)+(c+1));i++}}
+{for(let r=0;r<ROWS;r++)for(let c=0;c<=r;c++)POS_LABELS.push(String.fromCharCode(65+r)+(c+1))}
 
 function toIdx(r,c){if(r<0||r>=ROWS||c<0||c>r)return-1;return r*(r+1)/2+c}
 function fromIdx(i){let r=0;while((r+1)*(r+2)/2<=i)r++;return{row:r,col:i-r*(r+1)/2}}
 function createBoard(e=0){const p=Array(TOTAL).fill(true);p[e]=false;return p}
 function getJumps(pegs,idx){
-  if(!pegs[idx])return[];
-  const{row,col}=fromIdx(idx),j=[];
-  for(const[dr1,dc1,dr2,dc2]of DIRS){const mi=toIdx(row+dr1,col+dc1),ti=toIdx(row+dr2,col+dc2);if(mi>=0&&ti>=0&&pegs[mi]&&!pegs[ti])j.push({target:ti,jumped:mi})}
-  return j;
+  if(!pegs[idx])return[];const{row,col}=fromIdx(idx),j=[];
+  for(const[dr1,dc1,dr2,dc2]of DIRS){const mi=toIdx(row+dr1,col+dc1),ti=toIdx(row+dr2,col+dc2);if(mi>=0&&ti>=0&&pegs[mi]&&!pegs[ti])j.push({target:ti,jumped:mi})}return j
 }
 function getAllMoves(pegs){const m=[];for(let i=0;i<TOTAL;i++){if(!pegs[i])continue;for(const j of getJumps(pegs,i))m.push({from:i,...j})}return m}
-function applyMove(pegs,from,target,jumped){const n=[...pegs];n[from]=false;n[jumped]=false;n[target]=true;return n}
+function applyMove(pegs,f,t,j){const n=[...pegs];n[f]=false;n[j]=false;n[t]=true;return n}
 function hasAnyMoves(pegs){for(let i=0;i<TOTAL;i++)if(pegs[i]&&getJumps(pegs,i).length>0)return true;return false}
 function pegsLeft(pegs){return pegs.filter(Boolean).length}
 function getRating(n){
   if(n===1)return{title:"Genius!",sub:"You left only one peg — you're a true genius!",icon:"🧠",cls:"genius"};
   if(n===2)return{title:"Pretty Smart",sub:"Only 2 pegs left. You're purty smart!",icon:"🎯",cls:"smart"};
   if(n===3)return{title:"Just Plain Dumb",sub:"3 pegs left — the board's words, not mine!",icon:"🤷",cls:"dumb"};
-  return{title:"Try Again!",sub:n+" pegs left. Give it another go!",icon:"🔄",cls:"bad"};
+  return{title:"Try Again!",sub:n+" pegs left. Give it another go!",icon:"🔄",cls:"bad"}
 }
 
-// ═════════════════════════════════════════════
-// CB ENGINE v1 — Exhaustive Search + Caching
-// ═════════════════════════════════════════════
-const engineCache=new Map();
+// ═══════════════════════════════════════════════════════
+// CB ENGINE — Exhaustive Search with Memoization
+// ═══════════════════════════════════════════════════════
+const EC=new Map();
+function bk(pegs){let k=0;for(let i=0;i<TOTAL;i++)if(pegs[i])k|=(1<<i);return k}
 
-function boardKey(pegs){let k=0;for(let i=0;i<TOTAL;i++)if(pegs[i])k|=(1<<i);return k}
-
-// Returns {best: minimum pegs achievable, paths: count of paths to that best, total: total terminal states}
-function engineAnalyze(pegs){
-  const key=boardKey(pegs);
-  if(engineCache.has(key))return engineCache.get(key);
-
+function engineSearch(pegs){
+  const key=bk(pegs);if(EC.has(key))return EC.get(key);
   const moves=getAllMoves(pegs);
-  if(moves.length===0){
-    const left=pegsLeft(pegs);
-    const res={best:left,total:1,onePeg:left===1?1:0,twoPeg:left<=2?1:0};
-    engineCache.set(key,res);
-    return res;
-  }
-
-  let best=15,total=0,onePeg=0,twoPeg=0;
-  for(const m of moves){
-    const next=applyMove(pegs,m.from,m.target,m.jumped);
-    const sub=engineAnalyze(next);
-    if(sub.best<best)best=sub.best;
-    total+=sub.total;
-    onePeg+=sub.onePeg;
-    twoPeg+=sub.twoPeg;
-  }
-  const res={best,total,onePeg,twoPeg};
-  engineCache.set(key,res);
-  return res;
+  if(moves.length===0){const l=pegsLeft(pegs);const r={best:l,total:1,one:l===1?1:0};EC.set(key,r);return r}
+  let best=15,total=0,one=0;
+  for(const m of moves){const nx=applyMove(pegs,m.from,m.target,m.jumped);const s=engineSearch(nx);if(s.best<best)best=s.best;total+=s.total;one+=s.one}
+  const r={best,total,one};EC.set(key,r);return r
 }
 
-// Evaluate a specific move: returns {bestAfter, winPct, quality}
-function engineEvalMove(pegs,from,target,jumped){
-  const next=applyMove(pegs,from,target,jumped);
-  const analysis=engineAnalyze(next);
-  const winPct=analysis.total>0?(analysis.onePeg/analysis.total*100):0;
-  const twoPct=analysis.total>0?(analysis.twoPeg/analysis.total*100):0;
-  let quality;
-  if(analysis.best===1)quality='best';
-  else if(analysis.best===2)quality='good';
-  else if(analysis.best<=4)quality='ok';
-  else quality='bad';
-  return{bestAfter:analysis.best,winPct,twoPct,quality,onePeg:analysis.onePeg,total:analysis.total};
-}
-
-// Evaluate current position
-function engineEvalPosition(pegs){
-  const analysis=engineAnalyze(pegs);
-  const moves=getAllMoves(pegs);
-  if(moves.length===0)return{bestPossible:pegsLeft(pegs),winPct:0,moveEvals:[]};
-  const winPct=analysis.total>0?(analysis.onePeg/analysis.total*100):0;
-  // Evaluate each available move
-  const moveEvals=moves.map(m=>{
-    const ev=engineEvalMove(pegs,m.from,m.target,m.jumped);
-    return{...m,...ev};
+// Classify a move by comparing it to the best available move
+// Returns: {classification, bestPossibleBefore, bestPossibleAfter, bestMoveWas, winPctBefore, winPctAfter}
+function classifyMove(boardBefore,from,target,jumped){
+  // Analyze all moves from this position
+  const moves=getAllMoves(boardBefore);
+  const evals=moves.map(m=>{
+    const nx=applyMove(boardBefore,m.from,m.target,m.jumped);
+    const s=engineSearch(nx);
+    const wp=s.total>0?(s.one/s.total*100):0;
+    return{...m,best:s.best,winPct:wp}
   });
-  // Sort by bestAfter ascending, then winPct descending
-  moveEvals.sort((a,b)=>a.bestAfter-b.bestAfter||(b.winPct-a.winPct));
-  return{bestPossible:analysis.best,winPct,moveEvals};
+  evals.sort((a,b)=>a.best-b.best||(b.winPct-a.winPct));
+
+  const bestMove=evals[0];
+  const thisEval=evals.find(e=>e.from===from&&e.target===target);
+  if(!thisEval)return{classification:'blunder',bestPossibleAfter:15,winPctAfter:0,bestMove,bestPossibleBefore:bestMove.best,winPctBefore:bestMove.winPct};
+
+  const bestBest=bestMove.best;
+  const thisBest=thisEval.best;
+  const bestWp=bestMove.winPct;
+  const thisWp=thisEval.winPct;
+
+  let cls;
+  if(thisBest===bestBest&&Math.abs(thisWp-bestWp)<0.5){
+    cls='best';
+  }else if(thisBest===bestBest&&Math.abs(thisWp-bestWp)<5){
+    cls='great';
+  }else if(thisBest===bestBest){
+    cls='good';
+  }else if(thisBest<=bestBest+1&&thisWp>=bestWp*0.3){
+    cls='inaccuracy';
+  }else if(thisBest<=bestBest+2){
+    cls='mistake';
+  }else{
+    cls='blunder';
+  }
+
+  return{
+    classification:cls,
+    bestPossibleBefore:bestBest,
+    bestPossibleAfter:thisBest,
+    winPctBefore:bestWp,
+    winPctAfter:thisWp,
+    bestMove:bestMove.from===from&&bestMove.target===target?null:bestMove
+  }
 }
 
-// ═════════════════════════════════════════════
-// AUDIO
-// ═════════════════════════════════════════════
-let audioCtx=null;
-function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx}
-function resumeAudio(){const c=getAudioCtx();if(c.state==='suspended')c.resume()}
-function playTone(f,d,t='sine',v=0.12,dc=0.15){const c=getAudioCtx(),o=c.createOscillator(),g=c.createGain();o.type=t;o.frequency.setValueAtTime(f,c.currentTime);g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dc);o.connect(g);g.connect(c.destination);o.start(c.currentTime);o.stop(c.currentTime+d)}
-function playNoise(d,v=0.06){const c=getAudioCtx(),sz=c.sampleRate*d,buf=c.createBuffer(1,sz,c.sampleRate),dt=buf.getChannelData(0);for(let i=0;i<sz;i++)dt[i]=(Math.random()*2-1)*Math.pow(1-i/sz,3);const s=c.createBufferSource();s.buffer=buf;const g=c.createGain();g.gain.setValueAtTime(v,c.currentTime);s.connect(g);g.connect(c.destination);s.start()}
-function soundPickup(){playTone(600,0.08,'sine',0.06,0.08)}
-function soundPlace(){playNoise(0.06,0.1);playTone(400,0.1,'triangle',0.1,0.1)}
-function soundCapture(){playTone(300,0.15,'triangle',0.08,0.15);setTimeout(()=>playNoise(0.05,0.07),40)}
-function soundIllegal(){playTone(180,0.12,'sawtooth',0.06,0.12);setTimeout(()=>playTone(140,0.12,'sawtooth',0.05,0.12),60)}
-function soundGameOver(){playTone(523,0.2,'sine',0.08,0.2);setTimeout(()=>playTone(659,0.2,'sine',0.08,0.2),120);setTimeout(()=>playTone(784,0.3,'sine',0.1,0.3),240)}
-function soundGameOverBad(){playTone(300,0.2,'triangle',0.08,0.2);setTimeout(()=>playTone(250,0.3,'triangle',0.08,0.3),150)}
+// Full game review
+function reviewGame(emptyIdx,moves){
+  let board=createBoard(emptyIdx);
+  const results=[];
+  for(const m of moves){
+    const cls=classifyMove(board,m.from,m.target,m.jumped);
+    results.push({from:m.from,target:m.target,jumped:m.jumped,...cls});
+    board=applyMove(board,m.from,m.target,m.jumped);
+  }
+  return results;
+}
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════════════════
+let AC=null;
+function gAC(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC}
+function rA(){const c=gAC();if(c.state==='suspended')c.resume()}
+function pT(f,d,t='sine',v=0.12,dc=0.15){const c=gAC(),o=c.createOscillator(),g=c.createGain();o.type=t;o.frequency.setValueAtTime(f,c.currentTime);g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dc);o.connect(g);g.connect(c.destination);o.start(c.currentTime);o.stop(c.currentTime+d)}
+function pN(d,v=0.06){const c=gAC(),sz=c.sampleRate*d,buf=c.createBuffer(1,sz,c.sampleRate),dt=buf.getChannelData(0);for(let i=0;i<sz;i++)dt[i]=(Math.random()*2-1)*Math.pow(1-i/sz,3);const s=c.createBufferSource();s.buffer=buf;const g=c.createGain();g.gain.setValueAtTime(v,c.currentTime);s.connect(g);g.connect(c.destination);s.start()}
+const sPickup=()=>pT(600,0.08,'sine',0.06,0.08);
+const sPlace=()=>{pN(0.06,0.1);pT(400,0.1,'triangle',0.1,0.1)};
+const sCapture=()=>{pT(300,0.15,'triangle',0.08,0.15);setTimeout(()=>pN(0.05,0.07),40)};
+const sIllegal=()=>{pT(180,0.12,'sawtooth',0.06,0.12);setTimeout(()=>pT(140,0.12,'sawtooth',0.05,0.12),60)};
+const sWin=()=>{pT(523,0.2,'sine',0.08,0.2);setTimeout(()=>pT(659,0.2,'sine',0.08,0.2),120);setTimeout(()=>pT(784,0.3,'sine',0.1,0.3),240)};
+const sLose=()=>{pT(300,0.2,'triangle',0.08,0.2);setTimeout(()=>pT(250,0.3,'triangle',0.08,0.3),150)};
+
+// ═══════════════════════════════════════════════════════
 // RENDERER
-// ═════════════════════════════════════════════
-const PEG_COLORS=['#f0ece4','#3b7dd8','#f0c030','#e86830'];
-const PEG_HL={'#f0ece4':'#ffffff','#3b7dd8':'#5a9df0','#f0c030':'#ffe060','#e86830':'#ff8858'};
-function rpc(){return PEG_COLORS[Math.floor(Math.random()*PEG_COLORS.length)]}
+// ═══════════════════════════════════════════════════════
+const PC=['#f0ece4','#3b7dd8','#f0c030','#e86830'];
+const PH={'#f0ece4':'#ffffff','#3b7dd8':'#5a9df0','#f0c030':'#ffe060','#e86830':'#ff8858'};
+function rpc(){return PC[Math.floor(Math.random()*PC.length)]}
 function dk(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`rgb(${Math.round(r*(1-a))},${Math.round(g*(1-a))},${Math.round(b*(1-a))})`}
 
 function drawBoard(c,W,H){
@@ -403,19 +396,11 @@ function drawBoard(c,W,H){
   c.save();c.font=`bold ${W*0.035}px 'Playfair Display',serif`;c.fillStyle='rgba(90,65,25,0.3)';c.textAlign='center';
   c.fillText('CRACKER BARREL™',W/2,H*0.77);
   c.font=`500 ${W*0.019}px 'DM Sans',sans-serif`;c.fillStyle='rgba(90,65,25,0.22)';
-  c.fillText("Leave one — you're a genius!",W/2,H*0.81);
-  c.fillText("Leave two — purty smart",W/2,H*0.84);
-  c.fillText("Leave three or more — just plain dumb",W/2,H*0.87);c.restore();
+  c.fillText("Leave one — you're a genius!",W/2,H*0.81);c.fillText("Leave two — purty smart",W/2,H*0.84);c.fillText("Leave three or more — just plain dumb",W/2,H*0.87);c.restore()
 }
-
-function drawHole(c,x,y,r){
-  c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle='#3d2810';c.fill();
-  const inn=c.createRadialGradient(x,y-r*0.2,0,x,y,r*0.8);inn.addColorStop(0,'#1a0e04');inn.addColorStop(1,'#2a1a08');
-  c.beginPath();c.arc(x,y+1,r*0.78,0,Math.PI*2);c.fillStyle=inn;c.fill();
-}
-
+function drawHole(c,x,y,r){c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle='#3d2810';c.fill();const inn=c.createRadialGradient(x,y-r*0.2,0,x,y,r*0.8);inn.addColorStop(0,'#1a0e04');inn.addColorStop(1,'#2a1a08');c.beginPath();c.arc(x,y+1,r*0.78,0,Math.PI*2);c.fillStyle=inn;c.fill()}
 function drawPeg(c,x,y,col,lift=false,sc=1,pR){
-  const r=pR*sc;c.save();const d=dk(col,0.3),hi=PEG_HL[col]||'#fff';
+  const r=pR*sc;c.save();const d=dk(col,0.3),hi=PH[col]||'#fff';
   if(!lift){c.beginPath();c.arc(x,y+r*0.35,r*0.5,0,Math.PI*2);c.fillStyle=d;c.fill()}
   const hg=c.createRadialGradient(x-r*0.28,y-r*0.28,r*0.08,x,y,r);hg.addColorStop(0,hi);hg.addColorStop(0.5,col);hg.addColorStop(1,d);
   c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle=hg;c.fill();
@@ -423,294 +408,277 @@ function drawPeg(c,x,y,col,lift=false,sc=1,pR){
   const cr=r*0.42;c.beginPath();c.moveTo(x-cr,y);c.lineTo(x+cr,y);c.moveTo(x,y-cr);c.lineTo(x,y+cr);c.stroke();
   const cr2=cr*0.55;c.beginPath();c.moveTo(x-cr2,y-cr2);c.lineTo(x+cr2,y+cr2);c.moveTo(x+cr2,y-cr2);c.lineTo(x-cr2,y+cr2);c.stroke();
   if(lift){c.beginPath();c.arc(x,y,r+3,0,Math.PI*2);c.strokeStyle='rgba(255,255,200,0.35)';c.lineWidth=2.5;c.stroke()}
-  c.restore();
+  c.restore()
 }
+function drawTH(c,x,y,r,now){const p=0.7+0.3*Math.sin(now*0.006);c.save();c.globalAlpha=0.4*p;c.beginPath();c.arc(x,y,r*0.85,0,Math.PI*2);c.fillStyle='#4CAF50';c.fill();c.globalAlpha=0.6*p;c.beginPath();c.arc(x,y,r*0.85,0,Math.PI*2);c.strokeStyle='#66BB6A';c.lineWidth=2;c.stroke();c.restore()}
 
-function drawTargetHint(c,x,y,r,now){
-  const p=0.7+0.3*Math.sin(now*0.006);c.save();c.globalAlpha=0.4*p;
-  c.beginPath();c.arc(x,y,r*0.85,0,Math.PI*2);c.fillStyle='#4CAF50';c.fill();
-  c.globalAlpha=0.6*p;c.beginPath();c.arc(x,y,r*0.85,0,Math.PI*2);c.strokeStyle='#66BB6A';c.lineWidth=2;c.stroke();c.restore();
-}
-
-// ═════════════════════════════════════════════
-// MAIN ENGINE
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// MAIN
+// ═══════════════════════════════════════════════════════
 const canvas=document.getElementById('board'),ctx=canvas.getContext('2d'),dpr=window.devicePixelRatio||1;
-let W,H,holeR,pegR,holePos=[];
-let pegs=[],pegCols=[],moveHist=[],mc=0,gameOver=false;
+let W,H,hR,pR,hPos=[];
+let pegs=[],pCols=[],mHist=[],mc=0,gOver=false;
 let best=(()=>{try{return parseInt(localStorage.getItem('cb_best')||'0',10)}catch{return 0}})();
-let dragging=null,validT=[],jMap={};
-let shakeA=null,removeA=[],snapA=[];
-// Track moves for history with engine eval
-let currentGameMoves=[];  // [{from, target, jumped, eval}]
-let currentGameStart=null;
-let currentEmptyIdx=0;
+let dragging=null,vT=[],jM={};
+let shA=null,rmA=[],snA=[];
+let curMoves=[],curStart=null,curEmpty=0;
 
 function resize(){
-  const mW=Math.min(440,window.innerWidth-32),mH=Math.min(420,window.innerHeight-280);
+  const mW=Math.min(440,window.innerWidth-32),mH=Math.min(420,window.innerHeight-260);
   const sz=Math.min(mW,mH);W=sz;H=sz;
   canvas.width=sz*dpr;canvas.height=sz*dpr;canvas.style.width=sz+'px';canvas.style.height=sz+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);holeR=sz*0.052;pegR=sz*0.042;compPos();
+  ctx.setTransform(dpr,0,0,dpr,0,0);hR=sz*0.052;pR=sz*0.042;cmpP()
 }
-
-function compPos(){
-  const cx=W/2,tY=W*0.12,bY=W*0.7,rH=(bY-tY)/(ROWS-1),cW=(W*0.72)/(ROWS-1);
-  holePos=[];for(let r=0;r<ROWS;r++){const y=tY+r*rH,sx=cx-(r*cW)/2;for(let c=0;c<=r;c++)holePos.push({x:sx+c*cW,y})}
-}
+function cmpP(){const cx=W/2,tY=W*0.12,bY=W*0.7,rH=(bY-tY)/(ROWS-1),cW=(W*0.72)/(ROWS-1);hPos=[];for(let r=0;r<ROWS;r++){const y=tY+r*rH,sx=cx-(r*cW)/2;for(let c=0;c<=r;c++)hPos.push({x:sx+c*cW,y})}}
 
 function initGame(ei=0){
-  pegs=createBoard(ei);pegCols=Array.from({length:TOTAL},()=>rpc());
-  moveHist=[];mc=0;gameOver=false;dragging=null;validT=[];jMap={};shakeA=null;removeA=[];snapA=[];
-  currentGameMoves=[];currentGameStart=Date.now();currentEmptyIdx=ei;
-  hideOv();updateUI();updateEngine();
+  pegs=createBoard(ei);pCols=Array.from({length:TOTAL},()=>rpc());
+  mHist=[];mc=0;gOver=false;dragging=null;vT=[];jM={};shA=null;rmA=[];snA=[];
+  curMoves=[];curStart=Date.now();curEmpty=ei;
+  hideOv();updateUI()
 }
 
 function execMove(fi,ti,ji){
-  // Engine eval BEFORE the move
-  const evalBefore=engineEvalMove(pegs,fi,ti,ji);
-
-  moveHist.push({from:fi,target:ti,jumped:ji,jCol:pegCols[ji],fCol:pegCols[fi]});
-  currentGameMoves.push({from:fi,target:ti,jumped:ji,eval:evalBefore});
-
-  const jh=holePos[ji];removeA.push({x:jh.x,y:jh.y,color:pegCols[ji],start:performance.now()});
-  snapA.push({idx:ti,fromX:holePos[fi].x,fromY:holePos[fi].y,start:performance.now()});
-  pegCols[ti]=pegCols[fi];pegs[fi]=false;pegs[ji]=false;pegs[ti]=true;
-  mc++;soundPlace();setTimeout(()=>soundCapture(),50);updateUI();
-
-  // Update engine after move
-  setTimeout(()=>updateEngine(),50);
-
+  // Store board state before move for later review
+  curMoves.push({from:fi,target:ti,jumped:ji,boardBefore:[...pegs]});
+  mHist.push({from:fi,target:ti,jumped:ji,jCol:pCols[ji],fCol:pCols[fi]});
+  const jh=hPos[ji];rmA.push({x:jh.x,y:jh.y,color:pCols[ji],start:performance.now()});
+  snA.push({idx:ti,fromX:hPos[fi].x,fromY:hPos[fi].y,start:performance.now()});
+  pCols[ti]=pCols[fi];pegs[fi]=false;pegs[ji]=false;pegs[ti]=true;
+  mc++;sPlace();setTimeout(sCapture,50);updateUI();
   setTimeout(()=>{
     if(!hasAnyMoves(pegs)){
-      gameOver=true;const left=pegsLeft(pegs),rat=getRating(left);
+      gOver=true;const left=pegsLeft(pegs),rat=getRating(left);
       if(left<best||best===0){best=left;try{localStorage.setItem('cb_best',String(best))}catch{}}
-      if(left<=2)soundGameOver();else soundGameOverBad();
-      showOv(rat);updateUI();
-      // Save to history
+      if(left<=2)sWin();else sLose();showOv(rat);updateUI();
       saveGameToHistory(left);
     }
-  },350);
+  },350)
 }
 
 function undo(){
-  if(moveHist.length===0||gameOver)return;
-  const m=moveHist.pop();currentGameMoves.pop();
-  pegCols[m.from]=m.fCol;pegCols[m.jumped]=m.jCol;
+  if(mHist.length===0||gOver)return;
+  const m=mHist.pop();curMoves.pop();
+  pCols[m.from]=m.fCol;pCols[m.jumped]=m.jCol;
   pegs[m.from]=true;pegs[m.jumped]=true;pegs[m.target]=false;
-  mc--;gameOver=false;hideOv();updateUI();
-  setTimeout(()=>updateEngine(),50);
+  mc--;gOver=false;hideOv();updateUI()
 }
 
-function hitTest(x,y){const t=holeR*1.6;for(let i=0;i<holePos.length;i++){const h=holePos[i],dx=x-h.x,dy=y-h.y;if(dx*dx+dy*dy<t*t)return i}return-1}
-function cPos(e){const r=canvas.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top}}
-function cPosEnd(e){const r=canvas.getBoundingClientRect(),s=e.changedTouches?e.changedTouches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top}}
+function hitTest(x,y){const t=hR*1.6;for(let i=0;i<hPos.length;i++){const h=hPos[i],dx=x-h.x,dy=y-h.y;if(dx*dx+dy*dy<t*t)return i}return-1}
+function cP(e){const r=canvas.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top}}
+function cPE(e){const r=canvas.getBoundingClientRect(),s=e.changedTouches?e.changedTouches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top}}
+function onS(e){e.preventDefault();rA();if(gOver)return;const p=cP(e),idx=hitTest(p.x,p.y);if(idx<0||!pegs[idx])return;const jumps=getJumps(pegs,idx);dragging={idx,ox:p.x-hPos[idx].x,oy:p.y-hPos[idx].y,cx:p.x,cy:p.y};vT=jumps.map(j=>j.target);jM={};for(const j of jumps)jM[j.target]=j.jumped;sPickup()}
+function onM(e){e.preventDefault();if(!dragging)return;const p=cP(e);dragging.cx=p.x;dragging.cy=p.y}
+function onE(e){e.preventDefault();if(!dragging)return;const p=cPE(e),di=hitTest(p.x,p.y);if(di>=0&&vT.includes(di))execMove(dragging.idx,di,jM[di]);else if(di>=0&&di!==dragging.idx){shA={idx:dragging.idx,start:performance.now()};sIllegal()}dragging=null;vT=[];jM={}}
+canvas.addEventListener('mousedown',onS);canvas.addEventListener('mousemove',onM);canvas.addEventListener('mouseup',onE);
+canvas.addEventListener('mouseleave',()=>{dragging=null;vT=[];jM={}});
+canvas.addEventListener('touchstart',onS,{passive:false});canvas.addEventListener('touchmove',onM,{passive:false});canvas.addEventListener('touchend',onE,{passive:false});
 
-function onStart(e){e.preventDefault();resumeAudio();if(gameOver)return;const p=cPos(e),idx=hitTest(p.x,p.y);if(idx<0||!pegs[idx])return;const jumps=getJumps(pegs,idx);dragging={idx,ox:p.x-holePos[idx].x,oy:p.y-holePos[idx].y,cx:p.x,cy:p.y};validT=jumps.map(j=>j.target);jMap={};for(const j of jumps)jMap[j.target]=j.jumped;soundPickup()}
-function onMove(e){e.preventDefault();if(!dragging)return;const p=cPos(e);dragging.cx=p.x;dragging.cy=p.y}
-function onEnd(e){e.preventDefault();if(!dragging)return;const p=cPosEnd(e),di=hitTest(p.x,p.y);if(di>=0&&validT.includes(di))execMove(dragging.idx,di,jMap[di]);else if(di>=0&&di!==dragging.idx){shakeA={idx:dragging.idx,start:performance.now()};soundIllegal()}dragging=null;validT=[];jMap={}}
-
-canvas.addEventListener('mousedown',onStart);canvas.addEventListener('mousemove',onMove);canvas.addEventListener('mouseup',onEnd);
-canvas.addEventListener('mouseleave',()=>{dragging=null;validT=[];jMap={}});
-canvas.addEventListener('touchstart',onStart,{passive:false});canvas.addEventListener('touchmove',onMove,{passive:false});canvas.addEventListener('touchend',onEnd,{passive:false});
-
-// ═════════════════════════════════════════════
-// ENGINE UI
-// ═════════════════════════════════════════════
-function updateEngine(){
-  const evalEl=document.getElementById('engineEval');
-  const fillEl=document.getElementById('engineProbFill');
-
-  if(gameOver||pegsLeft(pegs)<=1){
-    const left=pegsLeft(pegs);
-    evalEl.innerHTML=left===1?'<span class="pct" style="color:var(--green)">Perfect game!</span>':'Game over — '+left+' pegs left';
-    fillEl.style.width=(left===1?100:0)+'%';
-    return;
-  }
-
-  // Run engine (cached, so fast after first call)
-  try{
-    const ev=engineEvalPosition(pegs);
-    const pct=ev.winPct;
-    const bestMove=ev.moveEvals[0];
-    let evalText;
-    if(ev.bestPossible===1){
-      evalText=`<span class="pct" style="color:var(--green)">${pct.toFixed(1)}%</span> win · Best: ${POS_LABELS[bestMove.from]}→${POS_LABELS[bestMove.target]}`;
-    }else{
-      evalText=`<span class="pct" style="color:var(--orange)">Best: ${ev.bestPossible} pegs</span> · ${POS_LABELS[bestMove.from]}→${POS_LABELS[bestMove.target]}`;
-    }
-    evalEl.innerHTML=evalText;
-    fillEl.style.width=Math.max(2,Math.min(100,ev.bestPossible===1?pct:pct*0.5))+'%';
-  }catch(e){
-    evalEl.textContent='Analyzing...';
-  }
-}
-
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // RENDER
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 function draw(){
   const now=performance.now();ctx.clearRect(0,0,W,H);drawBoard(ctx,W,H);
-  for(let i=0;i<TOTAL;i++)drawHole(ctx,holePos[i].x,holePos[i].y,holeR);
-  if(dragging){
-    const oh=holePos[dragging.idx];ctx.save();ctx.globalAlpha=0.45;ctx.setLineDash([4,4]);
-    ctx.beginPath();ctx.arc(oh.x,oh.y,holeR*0.75,0,Math.PI*2);ctx.strokeStyle='#aaa';ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);ctx.restore();
-    for(const t of validT)drawTargetHint(ctx,holePos[t].x,holePos[t].y,holeR,now);
-  }
+  for(let i=0;i<TOTAL;i++)drawHole(ctx,hPos[i].x,hPos[i].y,hR);
+  if(dragging){const oh=hPos[dragging.idx];ctx.save();ctx.globalAlpha=0.45;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc(oh.x,oh.y,hR*0.75,0,Math.PI*2);ctx.strokeStyle='#aaa';ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);ctx.restore();for(const t of vT)drawTH(ctx,hPos[t].x,hPos[t].y,hR,now)}
   for(let i=0;i<TOTAL;i++){
     if(dragging&&i===dragging.idx)continue;if(!pegs[i])continue;
-    let px=holePos[i].x,py=holePos[i].y;
-    const sa=snapA.find(a=>a.idx===i);
-    if(sa){const t=Math.min((now-sa.start)/180,1),ease=1-Math.pow(1-t,3);px=sa.fromX+(holePos[i].x-sa.fromX)*ease;py=sa.fromY+(holePos[i].y-sa.fromY)*ease;if(t>=1)snapA.splice(snapA.indexOf(sa),1)}
-    let so=0;if(shakeA&&shakeA.idx===i){const el=now-shakeA.start;if(el<380)so=Math.sin(el*0.045)*7*(1-el/380);else shakeA=null}
-    drawPeg(ctx,px+so,py,pegCols[i],false,1,pegR);
+    let px=hPos[i].x,py=hPos[i].y;
+    const sa=snA.find(a=>a.idx===i);if(sa){const t=Math.min((now-sa.start)/180,1),e=1-Math.pow(1-t,3);px=sa.fromX+(hPos[i].x-sa.fromX)*e;py=sa.fromY+(hPos[i].y-sa.fromY)*e;if(t>=1)snA.splice(snA.indexOf(sa),1)}
+    let so=0;if(shA&&shA.idx===i){const el=now-shA.start;if(el<380)so=Math.sin(el*0.045)*7*(1-el/380);else shA=null}
+    drawPeg(ctx,px+so,py,pCols[i],false,1,pR)
   }
-  for(let i=removeA.length-1;i>=0;i--){const a=removeA[i],t=(now-a.start)/300;if(t>=1){removeA.splice(i,1);continue}ctx.save();ctx.globalAlpha=1-t;drawPeg(ctx,a.x,a.y,a.color,false,1+t*0.35,pegR);ctx.restore()}
-  if(dragging){const dx=dragging.cx-dragging.ox,dy=dragging.cy-dragging.oy;ctx.save();ctx.globalAlpha=0.25;ctx.beginPath();ctx.ellipse(dx+4,dy+8,pegR*1.2,pegR*0.65,0,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();ctx.restore();drawPeg(ctx,dx,dy,pegCols[dragging.idx],true,1.18,pegR)}
-  requestAnimationFrame(draw);
+  for(let i=rmA.length-1;i>=0;i--){const a=rmA[i],t=(now-a.start)/300;if(t>=1){rmA.splice(i,1);continue}ctx.save();ctx.globalAlpha=1-t;drawPeg(ctx,a.x,a.y,a.color,false,1+t*0.35,pR);ctx.restore()}
+  if(dragging){const dx=dragging.cx-dragging.ox,dy=dragging.cy-dragging.oy;ctx.save();ctx.globalAlpha=0.25;ctx.beginPath();ctx.ellipse(dx+4,dy+8,pR*1.2,pR*0.65,0,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();ctx.restore();drawPeg(ctx,dx,dy,pCols[dragging.idx],true,1.18,pR)}
+  requestAnimationFrame(draw)
 }
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // UI
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 function updateUI(){
   document.getElementById('pegsLeft').textContent=pegsLeft(pegs);
   document.getElementById('moveCount').textContent=mc;
   document.getElementById('bestScore').textContent=best>0?best:'—';
-  document.getElementById('undoBtn').disabled=moveHist.length===0||gameOver;
+  document.getElementById('undoBtn').disabled=mHist.length===0||gOver
 }
 function showOv(r){document.getElementById('overlayIcon').textContent=r.icon;document.getElementById('overlayTitle').textContent=r.title;document.getElementById('overlaySub').textContent=r.sub;document.getElementById('overlay').classList.add('visible')}
 function hideOv(){document.getElementById('overlay').classList.remove('visible')}
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// GAME REVIEW
+// ═══════════════════════════════════════════════════════
+const CLS_META={
+  best:{label:'Best',color:'var(--teal)',bg:'var(--teal-dim)',icon:'★'},
+  great:{label:'Great',color:'var(--green)',bg:'var(--green-dim)',icon:'●'},
+  good:{label:'Good',color:'var(--blue)',bg:'var(--blue-dim)',icon:'◆'},
+  inaccuracy:{label:'Inaccuracy',color:'#e6d54a',bg:'var(--yellow-dim)',icon:'?!'},
+  mistake:{label:'Mistake',color:'var(--orange)',bg:'var(--orange-dim)',icon:'?'},
+  blunder:{label:'Blunder',color:'var(--red)',bg:'var(--red-dim)',icon:'??'}
+};
+const CLS_ORDER=['best','great','good','inaccuracy','mistake','blunder'];
+
+function showReview(emptyIdx,moves,fromHistory=false){
+  // Run engine analysis
+  const results=[];
+  let board=createBoard(emptyIdx);
+  for(const m of moves){
+    const cls=classifyMove(board,m.from,m.target,m.jumped);
+    results.push({from:m.from,target:m.target,jumped:m.jumped,...cls});
+    board=applyMove(board,m.from,m.target,m.jumped);
+  }
+
+  // Count classifications
+  const counts={};for(const c of CLS_ORDER)counts[c]=0;
+  for(const r of results)counts[r.classification]++;
+
+  // Accuracy score (weighted)
+  const weights={best:100,great:85,good:65,inaccuracy:40,mistake:15,blunder:0};
+  const totalWeight=results.reduce((s,r)=>s+weights[r.classification],0);
+  const accuracy=results.length>0?Math.round(totalWeight/results.length):0;
+
+  // Accuracy color
+  let accColor='var(--red)';
+  if(accuracy>=90)accColor='var(--teal)';
+  else if(accuracy>=75)accColor='var(--green)';
+  else if(accuracy>=60)accColor='var(--blue)';
+  else if(accuracy>=40)accColor='var(--orange)';
+
+  // Build HTML
+  const badgesHtml=CLS_ORDER.filter(c=>counts[c]>0).map(c=>{
+    const m=CLS_META[c];return`<div class="review-badge rb-${c}"><span class="rb-count">${counts[c]}</span>${m.label}</div>`
+  }).join('');
+
+  // Bar segments
+  const barHtml=results.map(r=>{
+    const m=CLS_META[r.classification];
+    const w=100/results.length;
+    return`<div class="review-bar-seg" style="width:${w}%;background:${m.color}"></div>`
+  }).join('');
+
+  // Move list
+  const movesHtml=results.map((r,i)=>{
+    const m=CLS_META[r.classification];
+    const bestWasHtml=r.bestMove?`<div class="rm-best-was">Best was ${POS_LABELS[r.bestMove.from]} → ${POS_LABELS[r.bestMove.target]}</div>`:'';
+    return`<div class="review-move" style="border-left:3px solid ${m.color}">
+      <span class="rm-num">${i+1}</span>
+      <span class="rm-move">${POS_LABELS[r.from]}<span class="rm-arrow">→</span>${POS_LABELS[r.target]}</span>
+      <span class="rm-detail">${r.bestPossibleAfter}p ${r.winPctAfter.toFixed(0)}%</span>
+      <span class="rm-classification rm-cls-${r.classification}">${m.icon} ${m.label}</span>
+    </div>${bestWasHtml}`
+  }).join('');
+
+  document.getElementById('reviewContent').innerHTML=`
+    <div class="review-header">
+      <h2>⚙️ Game Review</h2>
+      <div class="review-accuracy" style="color:${accColor}">${accuracy}%</div>
+      <div class="review-accuracy-label">Accuracy</div>
+    </div>
+    <div class="review-summary">${badgesHtml}</div>
+    <div class="review-bar">${barHtml}</div>
+    <div class="review-moves">${movesHtml}</div>
+    <div style="margin-top:16px"><button class="btn btn-primary" id="closeReview">Close</button></div>
+  `;
+
+  document.getElementById('reviewModal').classList.add('visible');
+  document.getElementById('closeReview').addEventListener('click',()=>document.getElementById('reviewModal').classList.remove('visible'));
+  document.getElementById('reviewModal').addEventListener('click',e=>{if(e.target===document.getElementById('reviewModal'))document.getElementById('reviewModal').classList.remove('visible')});
+}
+
+document.getElementById('overlayReview').addEventListener('click',()=>{
+  hideOv();showReview(curEmpty,curMoves)
+});
+
+// ═══════════════════════════════════════════════════════
 // HISTORY
-// ═════════════════════════════════════════════
-function loadHistory(){try{return JSON.parse(localStorage.getItem('cb_history')||'[]')}catch{return[]}}
-function saveHistory(h){try{localStorage.setItem('cb_history',JSON.stringify(h))}catch{}}
+// ═══════════════════════════════════════════════════════
+function loadHist(){try{return JSON.parse(localStorage.getItem('cb_history')||'[]')}catch{return[]}}
+function saveHist(h){try{localStorage.setItem('cb_history',JSON.stringify(h))}catch{}}
 
 function saveGameToHistory(finalPegs){
-  const h=loadHistory();
-  const rating=getRating(finalPegs);
-  // Calculate average move quality
-  let totalWinPct=0;
-  const movesWithEval=currentGameMoves.map(m=>{
-    totalWinPct+=m.eval.winPct;
-    return{from:POS_LABELS[m.from],target:POS_LABELS[m.target],jumped:POS_LABELS[m.jumped],bestAfter:m.eval.bestAfter,winPct:m.eval.winPct.toFixed(1),quality:m.eval.quality};
-  });
-  const avgAccuracy=currentGameMoves.length>0?(totalWinPct/currentGameMoves.length):0;
-
-  h.unshift({
-    id:Date.now(),
-    date:new Date().toISOString(),
-    pegsLeft:finalPegs,
-    moves:mc,
-    rating:rating.cls,
-    ratingTitle:rating.title,
-    emptyStart:POS_LABELS[currentEmptyIdx],
-    moveLog:movesWithEval,
-    avgAccuracy:avgAccuracy.toFixed(1)
-  });
-  // Keep last 50 games
+  const h=loadHist();const rating=getRating(finalPegs);
+  // Store lightweight move data for replay
+  const moveData=curMoves.map(m=>({from:m.from,target:m.target,jumped:m.jumped}));
+  h.unshift({id:Date.now(),date:new Date().toISOString(),pegsLeft:finalPegs,moves:mc,rating:rating.cls,ratingTitle:rating.title,emptyStart:curEmpty,emptyStartLabel:POS_LABELS[curEmpty],moveLog:moveData});
   if(h.length>50)h.length=50;
-  saveHistory(h);
-  renderHistory();
+  saveHist(h);renderHistory()
 }
 
 function renderHistory(){
-  const h=loadHistory();
-  const list=document.getElementById('historyList');
-
-  // Stats
+  const h=loadHist(),list=document.getElementById('historyList');
   document.getElementById('hsTotalGames').textContent=h.length;
   if(h.length>0){
-    const avg=(h.reduce((s,g)=>s+g.pegsLeft,0)/h.length).toFixed(1);
-    const bestEver=Math.min(...h.map(g=>g.pegsLeft));
-    const geniusCount=h.filter(g=>g.pegsLeft===1).length;
-    document.getElementById('hsAvgPegs').textContent=avg;
-    document.getElementById('hsBestEver').textContent=bestEver;
-    document.getElementById('hsGenius').textContent=geniusCount;
+    document.getElementById('hsAvgPegs').textContent=(h.reduce((s,g)=>s+g.pegsLeft,0)/h.length).toFixed(1);
+    document.getElementById('hsBestEver').textContent=Math.min(...h.map(g=>g.pegsLeft));
+    document.getElementById('hsGenius').textContent=h.filter(g=>g.pegsLeft===1).length;
   }else{
-    document.getElementById('hsAvgPegs').textContent='—';
-    document.getElementById('hsBestEver').textContent='—';
-    document.getElementById('hsGenius').textContent='0';
+    document.getElementById('hsAvgPegs').textContent='—';document.getElementById('hsBestEver').textContent='—';document.getElementById('hsGenius').textContent='0';
   }
-
-  if(h.length===0){
-    list.innerHTML='<div class="history-empty"><div class="he-icon">🎮</div>No games played yet.<br>Complete a game to see it here!</div>';
-    return;
-  }
+  if(h.length===0){list.innerHTML='<div class="history-empty"><div class="he-icon">🎮</div>No games played yet.<br>Complete a game to see it here!</div>';return}
 
   list.innerHTML=h.map(g=>{
     const d=new Date(g.date);
-    const dateStr=d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-    const movesHtml=(g.moveLog||[]).map(m=>{
-      const qCls=m.quality==='best'?'good':m.quality==='good'?'good':m.quality==='ok'?'ok':m.quality==='bad'?'bad':'terrible';
-      return`<div class="ge-move">${m.from}<span class="arrow">→</span>${m.target} <span class="ge-eval-badge ${qCls}">${m.winPct}%</span></div>`;
-    }).join('');
-
-    return`<div class="game-entry">
-      <div class="ge-top">
-        <span class="ge-result ${g.rating}">${g.ratingTitle} — ${g.pegsLeft} peg${g.pegsLeft!==1?'s':''}</span>
-        <span class="ge-date">${dateStr}</span>
-      </div>
-      <div class="ge-details">
-        <span>📍 ${g.moves} moves</span>
-        <span>🎯 Start: ${g.emptyStart}</span>
-        <span>⚙️ Avg: ${g.avgAccuracy||'—'}%</span>
-      </div>
-      <div class="ge-moves">${movesHtml}</div>
-    </div>`;
+    const ds=d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    return`<div class="game-entry" data-id="${g.id}">
+      <div class="ge-top"><span class="ge-result ${g.rating}">${g.ratingTitle} — ${g.pegsLeft} peg${g.pegsLeft!==1?'s':''}</span><span class="ge-date">${ds}</span></div>
+      <div class="ge-details"><span>📍 ${g.moves} moves</span><span>🎯 Start: ${g.emptyStartLabel||POS_LABELS[g.emptyStart]||'?'}</span></div>
+      <span class="ge-review-btn" data-review="${g.id}">⚙️ View Review →</span>
+    </div>`
   }).join('');
+
+  // Bind review buttons
+  list.querySelectorAll('[data-review]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id=parseInt(btn.dataset.review);
+      const game=h.find(g=>g.id===id);
+      if(game&&game.moveLog)showReview(game.emptyStart,game.moveLog);
+    })
+  })
 }
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // TABS
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 document.querySelectorAll('.tab').forEach(tab=>{
   tab.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('active');
-    if(tab.dataset.tab==='history')renderHistory();
-  });
+    tab.classList.add('active');document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+    if(tab.dataset.tab==='history')renderHistory()
+  })
 });
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // PICKER
-// ═════════════════════════════════════════════
-const pCan=document.getElementById('pickerCanvas'),pCtx=pCan.getContext('2d');let pPos=[];
+// ═══════════════════════════════════════════════════════
+const pCan=document.getElementById('pickerCanvas'),pCtx=pCan.getContext('2d');let pPo=[];
 function showPicker(){document.getElementById('pickerOverlay').classList.add('visible');drawPicker()}
 function hidePicker(){document.getElementById('pickerOverlay').classList.remove('visible')}
 function drawPicker(){
-  const sz=Math.min(260,window.innerWidth-80),pd=dpr;
-  pCan.width=sz*pd;pCan.height=sz*pd;pCan.style.width=sz+'px';pCan.style.height=sz+'px';pCtx.setTransform(pd,0,0,pd,0,0);
+  const sz=Math.min(260,window.innerWidth-80),pd=dpr;pCan.width=sz*pd;pCan.height=sz*pd;pCan.style.width=sz+'px';pCan.style.height=sz+'px';pCtx.setTransform(pd,0,0,pd,0,0);
   const cx=sz/2,tY=sz*0.1,bY=sz*0.85,rH=(bY-tY)/(ROWS-1),cW=(sz*0.72)/(ROWS-1),hr=sz*0.052;
-  pPos=[];pCtx.beginPath();pCtx.moveTo(cx,tY-hr*1.5);pCtx.lineTo(sz*0.92,bY+hr*1.5);pCtx.lineTo(sz*0.08,bY+hr*1.5);pCtx.closePath();pCtx.fillStyle='#b89040';pCtx.fill();pCtx.strokeStyle='#7a5c28';pCtx.lineWidth=1.5;pCtx.stroke();
-  for(let r=0;r<ROWS;r++){const y=tY+r*rH,sx=cx-(r*cW)/2;for(let c=0;c<=r;c++){const x=sx+c*cW;pPos.push({x,y});pCtx.beginPath();pCtx.arc(x,y,hr,0,Math.PI*2);pCtx.fillStyle='#3d2810';pCtx.fill();const gd=pCtx.createRadialGradient(x-hr*0.2,y-hr*0.2,hr*0.05,x,y,hr*0.75);gd.addColorStop(0,'#ffe880');gd.addColorStop(1,'#c89030');pCtx.beginPath();pCtx.arc(x,y,hr*0.72,0,Math.PI*2);pCtx.fillStyle=gd;pCtx.fill();
-    // Label
-    pCtx.fillStyle='rgba(0,0,0,0.4)';pCtx.font=`bold ${hr*0.55}px 'DM Sans',sans-serif`;pCtx.textAlign='center';pCtx.textBaseline='middle';pCtx.fillText(POS_LABELS[pPos.length-1],x,y);
-  }}
+  pPo=[];pCtx.beginPath();pCtx.moveTo(cx,tY-hr*1.5);pCtx.lineTo(sz*0.92,bY+hr*1.5);pCtx.lineTo(sz*0.08,bY+hr*1.5);pCtx.closePath();pCtx.fillStyle='#b89040';pCtx.fill();pCtx.strokeStyle='#7a5c28';pCtx.lineWidth=1.5;pCtx.stroke();
+  for(let r=0;r<ROWS;r++){const y=tY+r*rH,sx=cx-(r*cW)/2;for(let c=0;c<=r;c++){const x=sx+c*cW;pPo.push({x,y});pCtx.beginPath();pCtx.arc(x,y,hr,0,Math.PI*2);pCtx.fillStyle='#3d2810';pCtx.fill();const gd=pCtx.createRadialGradient(x-hr*0.2,y-hr*0.2,hr*0.05,x,y,hr*0.75);gd.addColorStop(0,'#ffe880');gd.addColorStop(1,'#c89030');pCtx.beginPath();pCtx.arc(x,y,hr*0.72,0,Math.PI*2);pCtx.fillStyle=gd;pCtx.fill();pCtx.fillStyle='rgba(0,0,0,0.4)';pCtx.font=`bold ${hr*0.55}px 'DM Sans',sans-serif`;pCtx.textAlign='center';pCtx.textBaseline='middle';pCtx.fillText(POS_LABELS[pPo.length-1],x,y)}}
 }
-pCan.addEventListener('click',e=>{const rect=pCan.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,hr=Math.min(260,window.innerWidth-80)*0.052;for(let i=0;i<pPos.length;i++){const p=pPos[i];if((x-p.x)**2+(y-p.y)**2<(hr*1.4)**2){hidePicker();initGame(i);return}}});
+pCan.addEventListener('click',e=>{const rect=pCan.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,hr=Math.min(260,window.innerWidth-80)*0.052;for(let i=0;i<pPo.length;i++){const p=pPo[i];if((x-p.x)**2+(y-p.y)**2<(hr*1.4)**2){hidePicker();initGame(i);return}}});
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // BUTTONS
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 document.getElementById('overlayNewGame').addEventListener('click',()=>{hideOv();showPicker()});
-document.getElementById('overlayUndo').addEventListener('click',()=>undo());
-document.getElementById('undoBtn').addEventListener('click',()=>undo());
+document.getElementById('overlayUndo').addEventListener('click',undo);
+document.getElementById('undoBtn').addEventListener('click',undo);
 document.getElementById('newGameBtn').addEventListener('click',()=>{hideOv();showPicker()});
 document.getElementById('pickerRandom').addEventListener('click',()=>{hidePicker();initGame(Math.floor(Math.random()*TOTAL))});
 document.getElementById('rulesBtn').addEventListener('click',()=>document.getElementById('rulesModal').classList.add('visible'));
 document.getElementById('closeRules').addEventListener('click',()=>document.getElementById('rulesModal').classList.remove('visible'));
 document.getElementById('rulesModal').addEventListener('click',e=>{if(e.target===document.getElementById('rulesModal'))document.getElementById('rulesModal').classList.remove('visible')});
-document.getElementById('clearHistoryBtn').addEventListener('click',()=>{if(confirm('Clear all game history?')){saveHistory([]);renderHistory()}});
-
+document.getElementById('clearHistoryBtn').addEventListener('click',()=>{if(confirm('Clear all game history?')){saveHist([]);renderHistory()}});
 window.addEventListener('resize',resize);
 
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // BOOT
-// ═════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 resize();initGame(0);requestAnimationFrame(draw);renderHistory();
 </script>
 </body>
