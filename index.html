@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Cracker Barrel Peg Game</title>
-<meta name="description" content="Play the classic Cracker Barrel triangle peg solitaire puzzle in your browser.">
+<title>Fabio's Game</title>
+<meta name="description" content="Fabio's Game — the triangle peg solitaire puzzle. Can you beat it?">
 <meta name="theme-color" content="#1a1410">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@ canvas{display:block;border-radius:var(--radius)}
 .btn-review:hover{background:linear-gradient(135deg,#334433,#283828)}
 
 /* ── Overlay ── */
-.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:var(--radius);opacity:0;pointer-events:none;transition:opacity 0.35s ease;z-index:10}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--radius);opacity:0;pointer-events:none;transition:opacity 0.35s ease;z-index:10}
 .overlay.visible{opacity:1;pointer-events:auto}
 .overlay-card{text-align:center;padding:20px 28px;transform:scale(0.92);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1)}
 .overlay.visible .overlay-card{transform:scale(1)}
@@ -160,6 +160,38 @@ canvas{display:block;border-radius:var(--radius)}
 .ge-review-btn:hover{text-decoration:underline}
 .history-actions{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0;display:flex;justify-content:center}
 
+/* ═══ TIMER ═══ */
+.timer-bar{width:100%;max-width:440px;margin-bottom:8px;display:none}
+.timer-bar.visible{display:block}
+.timer-outer{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;display:flex;align-items:center;gap:10px}
+.timer-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);flex-shrink:0}
+.timer-track{flex:1;height:8px;background:var(--bg-elevated);border-radius:4px;overflow:hidden}
+.timer-fill{height:100%;border-radius:4px;transition:width 0.3s linear}
+.timer-fill.safe{background:var(--green)}
+.timer-fill.warning{background:var(--orange)}
+.timer-fill.danger{background:var(--red);animation:timer-pulse 0.5s infinite}
+@keyframes timer-pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.timer-text{font-family:var(--font-mono);font-size:0.9rem;font-weight:600;min-width:42px;text-align:right}
+.timer-text.safe{color:var(--green)}
+.timer-text.warning{color:var(--orange)}
+.timer-text.danger{color:var(--red)}
+
+/* ═══ MODE SELECTOR ═══ */
+.mode-selector{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,8,5,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:25;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.mode-selector.visible{opacity:1;pointer-events:auto}
+.mode-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 20px;max-width:380px;width:92%;text-align:center}
+.mode-card h2{font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:var(--accent);margin-bottom:4px}
+.mode-card p{font-size:0.75rem;color:var(--text-dim);margin-bottom:16px}
+.mode-options{display:flex;flex-direction:column;gap:8px}
+.mode-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;text-align:left}
+.mode-opt:hover{background:var(--bg-elevated);border-color:var(--border-accent)}
+.mode-opt:active{transform:scale(0.98)}
+.mode-opt-icon{font-size:1.4rem;flex-shrink:0;width:32px;text-align:center}
+.mode-opt-info{flex:1}
+.mode-opt-name{font-weight:700;font-size:0.85rem;color:var(--text)}
+.mode-opt-desc{font-size:0.68rem;color:var(--text-dim);margin-top:1px}
+.mode-opt-time{font-family:var(--font-mono);font-weight:700;font-size:0.8rem;color:var(--accent);flex-shrink:0}
+
 @media(max-height:700px){
   .game-panel{padding:4px 12px}.header{margin-bottom:2px}.stats-bar{margin-bottom:4px;padding:4px 12px}.controls{margin-top:4px}h1{font-size:1.2rem}
 }
@@ -175,7 +207,7 @@ canvas{display:block;border-radius:var(--radius)}
   <!-- GAME PANEL -->
   <div class="panel game-panel active" data-panel="game">
     <header class="header">
-      <h1>Cracker Barrel<span class="tm">™</span></h1>
+      <h1>Fabio's Game</h1>
       <p class="subtitle">Peg Game</p>
     </header>
     <div class="stats-bar">
@@ -185,6 +217,16 @@ canvas{display:block;border-radius:var(--radius)}
       <div class="stat-divider"></div>
       <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="bestScore">—</span></div>
     </div>
+
+    <!-- Timer Bar -->
+    <div class="timer-bar" id="timerBar">
+      <div class="timer-outer">
+        <span class="timer-label">⏱ Time</span>
+        <div class="timer-track"><div class="timer-fill safe" id="timerFill" style="width:100%"></div></div>
+        <span class="timer-text safe" id="timerText">2:00</span>
+      </div>
+    </div>
+
     <div class="game-container" id="gameContainer">
       <canvas id="board"></canvas>
       <div class="overlay" id="overlay">
@@ -239,15 +281,50 @@ canvas{display:block;border-radius:var(--radius)}
         <div class="rule"><div class="rule-num">1</div><p>The board starts with 14 pegs and one empty hole.</p></div>
         <div class="rule"><div class="rule-num">2</div><p><strong>Drag a peg</strong> to jump over an adjacent peg into an empty hole. The jumped peg is removed.</p></div>
         <div class="rule"><div class="rule-num">3</div><p>Jumps can go in any of 6 directions — along the rows or diagonals of the triangle.</p></div>
-        <div class="rule"><div class="rule-num">4</div><p>The goal is to <strong>leave as few pegs as possible</strong>. Leaving just one makes you a genius!</p></div>
+        <div class="rule"><div class="rule-num">4</div><p>The goal is to <strong>leave as few pegs as possible</strong>. Leave just one and you're a damn genius!</p></div>
         <div class="rating-guide">
-          <div class="rating-row"><span class="rating-stars">★★★★</span><span>1 peg — Genius!</span></div>
-          <div class="rating-row"><span class="rating-stars">★★★</span><span>2 pegs — Pretty smart</span></div>
-          <div class="rating-row"><span class="rating-stars">★★</span><span>3 pegs — Just plain dumb</span></div>
-          <div class="rating-row"><span class="rating-stars dim">★</span><span>4+ pegs — Try again!</span></div>
+          <div class="rating-row"><span class="rating-stars">★★★★</span><span>1 peg — My man is a genius damn!</span></div>
+          <div class="rating-row"><span class="rating-stars">★★★</span><span>2 pegs — Eternal 2nd place...</span></div>
+          <div class="rating-row"><span class="rating-stars">★★</span><span>3 pegs — Just plain stupid mate</span></div>
+          <div class="rating-row"><span class="rating-stars dim">★</span><span>4+ pegs — Congrats eggnorant!</span></div>
         </div>
       </div>
       <button class="btn btn-primary" id="closeRules">Got it</button>
+    </div>
+  </div>
+
+  <!-- Mode Selector -->
+  <div class="mode-selector" id="modeSelector">
+    <div class="mode-card">
+      <h2>Choose Game Mode</h2>
+      <p>Classic or timed — how brave are you?</p>
+      <div class="mode-options">
+        <div class="mode-opt" data-mode="classic">
+          <div class="mode-opt-icon">♟️</div>
+          <div class="mode-opt-info"><div class="mode-opt-name">Classic</div><div class="mode-opt-desc">No time limit. Think it through.</div></div>
+          <div class="mode-opt-time">∞</div>
+        </div>
+        <div class="mode-opt" data-mode="beginner">
+          <div class="mode-opt-icon">🐢</div>
+          <div class="mode-opt-info"><div class="mode-opt-name">Beginner</div><div class="mode-opt-desc">Plenty of time to panic slowly.</div></div>
+          <div class="mode-opt-time">2:00</div>
+        </div>
+        <div class="mode-opt" data-mode="average">
+          <div class="mode-opt-icon">⚡</div>
+          <div class="mode-opt-info"><div class="mode-opt-name">Average</div><div class="mode-opt-desc">Tick tock. Better think fast.</div></div>
+          <div class="mode-opt-time">1:00</div>
+        </div>
+        <div class="mode-opt" data-mode="hard">
+          <div class="mode-opt-icon">🔥</div>
+          <div class="mode-opt-info"><div class="mode-opt-name">Hard</div><div class="mode-opt-desc">Sweat mode activated.</div></div>
+          <div class="mode-opt-time">0:30</div>
+        </div>
+        <div class="mode-opt" data-mode="pro">
+          <div class="mode-opt-icon">💀</div>
+          <div class="mode-opt-info"><div class="mode-opt-name">PRO</div><div class="mode-opt-desc">Blink and you lose. Good luck.</div></div>
+          <div class="mode-opt-time">0:15</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -278,10 +355,22 @@ function applyMove(pegs,f,t,j){const n=[...pegs];n[f]=false;n[j]=false;n[t]=true
 function hasAnyMoves(pegs){for(let i=0;i<TOTAL;i++)if(pegs[i]&&getJumps(pegs,i).length>0)return true;return false}
 function pegsLeft(pegs){return pegs.filter(Boolean).length}
 function getRating(n){
-  if(n===1)return{title:"Genius!",sub:"You left only one peg — you're a true genius!",icon:"🧠",cls:"genius"};
-  if(n===2)return{title:"Pretty Smart",sub:"Only 2 pegs left. You're purty smart!",icon:"🎯",cls:"smart"};
-  if(n===3)return{title:"Just Plain Dumb",sub:"3 pegs left — the board's words, not mine!",icon:"🤷",cls:"dumb"};
-  return{title:"Try Again!",sub:n+" pegs left. Give it another go!",icon:"🔄",cls:"bad"}
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  if(n===1)return{title:pick(["My man is a GENIUS damn!","Holy smokes, a genius!","You absolute legend!","Brain the size of a planet!"]),sub:pick(["One peg left. You actually did it. I'm shook.","Perfection. Chef's kiss. Go buy a lottery ticket.","You're the Einstein of triangle holes. Respect.","I didn't think you had it in you. I was wrong."]),icon:"🧠",cls:"genius"};
+  if(n===2)return{title:pick(["Eternal 2nd place...","Almost genius... almost.","Sooo close yet sooo far","The silver medal special"]),sub:pick(["2 pegs left. You're not THAT genius, my friend.","My man, that eternal 2nd place energy... it's giving participation trophy.","You were one move away from greatness. One. Move.","Close only counts in horseshoes, not peg games."]),icon:"🥈",cls:"smart"};
+  if(n===3)return{title:pick(["Just plain stupid mate","Bro... seriously?","Three pegs? THREE?!","Certified peg fumbler"]),sub:pick(["3 pegs left. That's not unlucky, that's a skill issue.","My grandma could do better and she doesn't have thumbs.","At this point the pegs are playing YOU.","I've seen better strategy from a goldfish."]),icon:"🤦",cls:"dumb"};
+  const roasts4=[
+    {t:"Congrats eggnorant!",s:n+" pegs left. Did you even read the rules or just vibed?"},
+    {t:"Absolute masterclass in failure",s:n+" pegs left. At least you're consistent... consistently bad."},
+    {t:"Were you even trying?!",s:n+" pegs left. My man played like he was blindfolded."},
+    {t:"Bro downloaded the wrong brain",s:n+" pegs left. Even the pegs feel embarrassed for you."},
+    {t:"Historic levels of bad",s:n+" pegs left. This performance will be studied by scientists."},
+    {t:"Thoughts and prayers",s:n+" pegs left. I'd say 'try again' but honestly... should you?"},
+    {t:"The pegs won. Flawless victory.",s:n+" pegs left. You didn't play the game, the game played you."},
+    {t:"New world record... for losing",s:n+" pegs left. Somewhere, a peg is writing a memoir about defeating you."}
+  ];
+  const r=pick(roasts4);
+  return{title:r.t,sub:r.s,icon:pick(["💀","🤡","😭","🪦","📉","🗑️"]),cls:"bad"}
 }
 
 // ═══════════════════════════════════════════════════════
@@ -394,9 +483,9 @@ function drawBoard(c,W,H){
   c.beginPath();c.moveTo(tX,tY+2);c.lineTo(bL+3,bY-1);c.strokeStyle='rgba(255,255,200,0.08)';c.lineWidth=2;c.stroke();
   c.beginPath();c.moveTo(tX,tY);c.lineTo(bR,bY);c.lineTo(bL,bY);c.closePath();c.strokeStyle='#7a5c28';c.lineWidth=2;c.stroke();
   c.save();c.font=`bold ${W*0.035}px 'Playfair Display',serif`;c.fillStyle='rgba(90,65,25,0.3)';c.textAlign='center';
-  c.fillText('CRACKER BARREL™',W/2,H*0.77);
+  c.fillText("FABIO'S GAME",W/2,H*0.77);
   c.font=`500 ${W*0.019}px 'DM Sans',sans-serif`;c.fillStyle='rgba(90,65,25,0.22)';
-  c.fillText("Leave one — you're a genius!",W/2,H*0.81);c.fillText("Leave two — purty smart",W/2,H*0.84);c.fillText("Leave three or more — just plain dumb",W/2,H*0.87);c.restore()
+  c.fillText("Leave one — you're a damn genius!",W/2,H*0.81);c.fillText("Leave two — eternal 2nd place...",W/2,H*0.84);c.fillText("Leave more — congrats eggnorant!",W/2,H*0.87);c.restore()
 }
 function drawHole(c,x,y,r){c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle='#3d2810';c.fill();const inn=c.createRadialGradient(x,y-r*0.2,0,x,y,r*0.8);inn.addColorStop(0,'#1a0e04');inn.addColorStop(1,'#2a1a08');c.beginPath();c.arc(x,y+1,r*0.78,0,Math.PI*2);c.fillStyle=inn;c.fill()}
 function drawPeg(c,x,y,col,lift=false,sc=1,pR){
@@ -423,6 +512,12 @@ let dragging=null,vT=[],jM={};
 let shA=null,rmA=[],snA=[];
 let curMoves=[],curStart=null,curEmpty=0;
 
+// Timer & Mode
+const MODE_TIMES={classic:0,beginner:120,average:60,hard:30,pro:15};
+const MODE_LABELS={classic:'Classic',beginner:'Beginner',average:'Average',hard:'Hard',pro:'PRO'};
+let gameMode='classic';
+let timerTotal=0,timerLeft=0,timerInterval=null,timerStarted=false;
+
 function resize(){
   const mW=Math.min(440,window.innerWidth-32),mH=Math.min(420,window.innerHeight-260);
   const sz=Math.min(mW,mH);W=sz;H=sz;
@@ -435,10 +530,65 @@ function initGame(ei=0){
   pegs=createBoard(ei);pCols=Array.from({length:TOTAL},()=>rpc());
   mHist=[];mc=0;gOver=false;dragging=null;vT=[];jM={};shA=null;rmA=[];snA=[];
   curMoves=[];curStart=Date.now();curEmpty=ei;
-  hideOv();updateUI()
+  hideOv();updateUI();
+  // Timer
+  stopTimer();
+  timerTotal=MODE_TIMES[gameMode]||0;timerLeft=timerTotal;timerStarted=false;
+  const tb=document.getElementById('timerBar');
+  if(timerTotal>0){tb.classList.add('visible');updateTimerUI()}else{tb.classList.remove('visible')}
+}
+
+function startTimer(){
+  if(timerTotal<=0||timerStarted)return;
+  timerStarted=true;
+  timerInterval=setInterval(()=>{
+    timerLeft=Math.max(0,timerLeft-0.1);
+    updateTimerUI();
+    if(timerLeft<=0){
+      stopTimer();
+      if(!gOver)triggerTimeOut();
+    }
+  },100);
+}
+
+function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}}
+
+function updateTimerUI(){
+  const fill=document.getElementById('timerFill');
+  const text=document.getElementById('timerText');
+  const pct=timerTotal>0?(timerLeft/timerTotal*100):100;
+  fill.style.width=pct+'%';
+  const mins=Math.floor(timerLeft/60);
+  const secs=Math.floor(timerLeft%60);
+  const tenths=Math.floor((timerLeft%1)*10);
+  text.textContent=timerLeft<10?`${secs}.${tenths}`:mins+':'+(secs<10?'0':'')+secs;
+  // Color classes
+  let cls='safe';if(pct<25)cls='danger';else if(pct<50)cls='warning';
+  fill.className='timer-fill '+cls;text.className='timer-text '+cls;
+}
+
+function triggerTimeOut(){
+  gOver=true;
+  const left=pegsLeft(pegs);
+  const timeRoasts=[
+    {t:"TIME'S UP SLOWPOKE! ⏰",s:left+" pegs left. You play like you're underwater."},
+    {t:"Clock said: nah fam",s:left+" pegs left. Even time gave up on you."},
+    {t:"Tick tock... you're done 💀",s:left+" pegs left. Speed was never your thing huh?"},
+    {t:"The timer had mercy. I don't.",s:left+" pegs left. That was painful to watch."},
+    {t:"EXPIRED like old milk 🥛",s:left+" pegs left. "+MODE_LABELS[gameMode]+" mode and you STILL couldn't finish?!"}
+  ];
+  const r=timeRoasts[Math.floor(Math.random()*timeRoasts.length)];
+  if(left<best||best===0){best=left;try{localStorage.setItem('cb_best',String(best))}catch{}}
+  sLose();
+  document.getElementById('overlayIcon').textContent='⏰';
+  document.getElementById('overlayTitle').textContent=r.t;
+  document.getElementById('overlaySub').textContent=r.s;
+  document.getElementById('overlay').classList.add('visible');
+  updateUI();saveGameToHistory(left,true);
 }
 
 function execMove(fi,ti,ji){
+  if(timerTotal>0&&!timerStarted)startTimer();
   // Store board state before move for later review
   curMoves.push({from:fi,target:ti,jumped:ji,boardBefore:[...pegs]});
   mHist.push({from:fi,target:ti,jumped:ji,jCol:pCols[ji],fCol:pCols[fi]});
@@ -448,6 +598,7 @@ function execMove(fi,ti,ji){
   mc++;sPlace();setTimeout(sCapture,50);updateUI();
   setTimeout(()=>{
     if(!hasAnyMoves(pegs)){
+      stopTimer();
       gOver=true;const left=pegsLeft(pegs),rat=getRating(left);
       if(left<best||best===0){best=left;try{localStorage.setItem('cb_best',String(best))}catch{}}
       if(left<=2)sWin();else sLose();showOv(rat);updateUI();
@@ -595,11 +746,11 @@ document.getElementById('overlayReview').addEventListener('click',()=>{
 function loadHist(){try{return JSON.parse(localStorage.getItem('cb_history')||'[]')}catch{return[]}}
 function saveHist(h){try{localStorage.setItem('cb_history',JSON.stringify(h))}catch{}}
 
-function saveGameToHistory(finalPegs){
-  const h=loadHist();const rating=getRating(finalPegs);
-  // Store lightweight move data for replay
+function saveGameToHistory(finalPegs,timedOut=false){
+  const h=loadHist();const rating=timedOut?{cls:'bad',title:'Time\'s Up!'}:getRating(finalPegs);
   const moveData=curMoves.map(m=>({from:m.from,target:m.target,jumped:m.jumped}));
-  h.unshift({id:Date.now(),date:new Date().toISOString(),pegsLeft:finalPegs,moves:mc,rating:rating.cls,ratingTitle:rating.title,emptyStart:curEmpty,emptyStartLabel:POS_LABELS[curEmpty],moveLog:moveData});
+  const timeUsed=timerTotal>0?(timerTotal-timerLeft).toFixed(1):null;
+  h.unshift({id:Date.now(),date:new Date().toISOString(),pegsLeft:finalPegs,moves:mc,rating:rating.cls,ratingTitle:rating.title,emptyStart:curEmpty,emptyStartLabel:POS_LABELS[curEmpty],moveLog:moveData,mode:gameMode,modeLabel:MODE_LABELS[gameMode],timedOut,timeUsed});
   if(h.length>50)h.length=50;
   saveHist(h);renderHistory()
 }
@@ -619,9 +770,12 @@ function renderHistory(){
   list.innerHTML=h.map(g=>{
     const d=new Date(g.date);
     const ds=d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    const modeStr=g.modeLabel||'Classic';
+    const timeStr=g.timeUsed?` · ⏱ ${g.timeUsed}s`:'';
+    const toStr=g.timedOut?' · ⏰ Timed out':'';
     return`<div class="game-entry" data-id="${g.id}">
       <div class="ge-top"><span class="ge-result ${g.rating}">${g.ratingTitle} — ${g.pegsLeft} peg${g.pegsLeft!==1?'s':''}</span><span class="ge-date">${ds}</span></div>
-      <div class="ge-details"><span>📍 ${g.moves} moves</span><span>🎯 Start: ${g.emptyStartLabel||POS_LABELS[g.emptyStart]||'?'}</span></div>
+      <div class="ge-details"><span>📍 ${g.moves} moves</span><span>🎯 ${g.emptyStartLabel||POS_LABELS[g.emptyStart]||'?'}</span><span>🏷️ ${modeStr}${timeStr}${toStr}</span></div>
       <span class="ge-review-btn" data-review="${g.id}">⚙️ View Review →</span>
     </div>`
   }).join('');
@@ -665,10 +819,20 @@ pCan.addEventListener('click',e=>{const rect=pCan.getBoundingClientRect(),x=e.cl
 // ═══════════════════════════════════════════════════════
 // BUTTONS
 // ═══════════════════════════════════════════════════════
-document.getElementById('overlayNewGame').addEventListener('click',()=>{hideOv();showPicker()});
+document.getElementById('overlayNewGame').addEventListener('click',()=>{hideOv();showModeSelector()});
 document.getElementById('overlayUndo').addEventListener('click',undo);
 document.getElementById('undoBtn').addEventListener('click',undo);
-document.getElementById('newGameBtn').addEventListener('click',()=>{hideOv();showPicker()});
+document.getElementById('newGameBtn').addEventListener('click',()=>{hideOv();showModeSelector()});
+
+// Mode selector
+function showModeSelector(){document.getElementById('modeSelector').classList.add('visible')}
+function hideModeSelector(){document.getElementById('modeSelector').classList.remove('visible')}
+document.querySelectorAll('.mode-opt').forEach(opt=>{
+  opt.addEventListener('click',()=>{
+    gameMode=opt.dataset.mode;
+    hideModeSelector();showPicker();
+  })
+});
 document.getElementById('pickerRandom').addEventListener('click',()=>{hidePicker();initGame(Math.floor(Math.random()*TOTAL))});
 document.getElementById('rulesBtn').addEventListener('click',()=>document.getElementById('rulesModal').classList.add('visible'));
 document.getElementById('closeRules').addEventListener('click',()=>document.getElementById('rulesModal').classList.remove('visible'));
